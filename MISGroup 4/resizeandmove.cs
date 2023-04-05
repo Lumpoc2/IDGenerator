@@ -14,6 +14,7 @@ namespace MISGroup_4
         private static bool _moveIsInterNal;
         private static bool _resizing;
         private static Size _currentControlStartSize;
+       
         internal static bool MouseIsInLeftEdge { get; set; }
         internal static bool MouseIsInRightEdge { get; set; }
         internal static bool MouseIsInTopEdge { get; set; }
@@ -42,6 +43,8 @@ namespace MISGroup_4
 
         internal static void Init(Control control, Control container)
         {
+           
+
             _moving = false;
             _resizing = false;
             _moveIsInterNal = false;
@@ -51,13 +54,15 @@ namespace MISGroup_4
             MouseIsInRightEdge = false;
             MouseIsInTopEdge = false;
             MouseIsInBottomEdge = false;
+
             WorkType = MoveOrResize.MoveAndResize;
             control.MouseDown += (sender, e) => StartMovingOrResizing(control, e);
             control.MouseUp += (sender, e) => StopDragOrResizing(control);
             control.MouseMove += (sender, e) => MoveControl(container, e);
             stopdragandresize = stop.StopDragOrResizing;
             WorkType = MoveOrResize.MoveAndResize;
-            
+           
+
         }
 
         private static void UpdateMouseEdgeProperties(Control control, Point mouseLocationInControl)

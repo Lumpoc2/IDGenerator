@@ -117,12 +117,6 @@ namespace MISGroup_4.Modules
                         Location = new Point(int.Parse(location[0]), int.Parse(location[1])),
                         //Font =  new Font("Arial", FontStyle,)
                         Font = new Font(FontFamily.GenericSansSerif, 10,FontStyle.Bold),
-                       
-                      
-                       
-                        
-
-
                     };
 
                     break;
@@ -136,7 +130,7 @@ namespace MISGroup_4.Modules
                         BackgroundImage = rd.GetString("assigned_panel") == "front"? student.ProfilePicture:student.Signature,
                         BackgroundImageLayout = ImageLayout.Stretch,
 
-                        };
+                    };
               
                     //MessageBox.Show($"{obj.Location.ToString()} {obj.Name}");
                     break;
@@ -147,11 +141,12 @@ namespace MISGroup_4.Modules
                         Size = new Size(int.Parse(size[0]), int.Parse(size[1])),
                        Location = new Point(int.Parse(location[0]), int.Parse(location[1])),
                        Tag = rd.GetString("assigned_panel"),
-                     //BackgroundImage = rd.GetString("assigned_panel") == "front" ?student.Signature: student.ProfilePicture ,
+                        //BackgroundImage = rd.GetString("assigned_panel") == "front" ?student.Signature: student.ProfilePicture ,
                         BackgroundImageLayout = ImageLayout.Stretch,
                         BackgroundImage = ImageLoader.ImageFromStream((byte[])rd["image"]),
+                        
 
-            };
+                    };
                     // MessageBox.Show($"{obj.BackgroundImage}
                    
                     break;
@@ -163,6 +158,7 @@ namespace MISGroup_4.Modules
 
         private string GetPropertyValue(string controlName, Object obj)
         {
+
             Type t = obj.GetType();
             foreach (var prop in t.GetProperties())
                 if (prop.Name == controlName)

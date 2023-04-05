@@ -51,31 +51,41 @@ namespace MISGroup_4
                 if(properties.Count > 0)
                 {
                     //this.Controls.Clear();
-                    panelFront.Controls.Clear();
                     panelBack.Controls.Clear();
+                    panelFront.Controls.Clear();
+
 
                     properties.ForEach(prop =>
                     {
-
-                        if (prop.Tag.ToString() == "front")
+                        //Check Control if panel
+                        if (prop.GetType() == typeof(Panel))
                         {
-                            panelFront.Controls.Add(prop);
+                            if ((string)prop.Tag == "front-background")
+                            {
+                                panelFront.BackgroundImage = prop.BackgroundImage;
+                                panelFront.BackgroundImageLayout = ImageLayout.Stretch;
+                            }
+                            else
+                            {
+                                panelBack.BackgroundImage = prop.BackgroundImage;
+                                panelBack.BackgroundImageLayout = ImageLayout.Stretch;
+
+                            }
 
                         }
                         else
-                            panelBack.Controls.Add(prop);
+                        {
 
-                        if (prop.Tag.ToString() == "front-background")
-                        {
-                            panelFront.BackgroundImage = prop.BackgroundImage;
-                            panelFront.BackgroundImageLayout = ImageLayout.Stretch;
-                        }
-                        else
-                        {
-                            panelBack.BackgroundImage = prop.BackgroundImage;
-                            panelBack.BackgroundImageLayout = ImageLayout.Stretch;
+                            if ((string)prop.Tag == "front")
+                                panelFront.Controls.Add(prop);
+                            else
+                                panelBack.Controls.Add(prop);
+
+
                         }
 
+
+                        //panel1.Controls.Add(prop);
                     });
 
                 }
@@ -267,6 +277,11 @@ namespace MISGroup_4
         }
 
         private void print_panel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
         }

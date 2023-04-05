@@ -66,39 +66,128 @@ namespace MISGroup_4
 
         public void GetIdTemplate(List<Control> properties)
         {
-            properties.ForEach(prop =>
+           properties.ForEach(prop =>
+{
+    // Check if control is a panel
+    if (prop is Panel)
+    {
+        if (prop.Tag as string == "front-background")
+        {
+            panelFront.BackgroundImage = prop.BackgroundImage;
+            panelFront.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+        else
+        {
+            panelBack.BackgroundImage = prop.BackgroundImage;
+            panelBack.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+    }
+    else
+    {
+        ControlMoverOrResizer.Init(prop);
+
+        if (prop.Tag != null && prop.Tag.ToString() == "front")
+            panelFront.Controls.Add(prop);
+        else
+            panelBack.Controls.Add(prop);
+
+        // Save control's original position in Tag property
+        if (prop.Tag == null)
+        {
+            prop.Tag = prop.Location;
+        }
+        else if (prop.Tag is string tagString)
+        {
+            string[] tagValues = tagString.Split(',');
+            if (tagValues.Length == 2 && int.TryParse(tagValues[0], out int x) && int.TryParse(tagValues[1], out int y))
             {
-                //Check Control if panel
-                if(prop.GetType() == typeof(Panel))
+                prop.Tag = new Point(x, y);
+            }
+        }
+
+        // Restrict controls within panel
+        prop.MouseDown += (sender, e) =>
+        {
+            var control = sender as Control;
+            var panel = control.Parent as Panel;
+
+            if (panel != null)
+            {
+                var maxPosX = panel.ClientSize.Width - control.Width;
+                var maxPosY = panel.ClientSize.Height - control.Height;
+
+                // Record mouse position relative to control
+                var mouseOffset = e.Location;
+
+                // Convert mouse position to panel coordinates
+                mouseOffset.Offset(control.Location);
+
+                // Store mouse offset in Tag property
+                control.Tag = mouseOffset;
+            }
+        };
+
+        prop.MouseMove += (sender, e) =>
+        {
+            var control = sender as Control;
+            var panel = control.Parent as Panel;
+
+            if (panel != null && e.Button == MouseButtons.Left)
+            {
+                // Get mouse offset from Tag property
+                var mouseOffset = control.Tag is Point tagPoint ? tagPoint : Point.Empty;
+
+                // Calculate new control position based on mouse offset and mouse position
+                var newLocation = panel.PointToClient(MousePosition);
+                newLocation.Offset(-mouseOffset.X, -mouseOffset.Y);
+
+                // Restrict control movement within panel
+                newLocation.X = Math.Max(0, Math.Min(newLocation.X, panel.ClientSize.Width - control.Width));
+                newLocation.Y = Math.Max(0, Math.Min(newLocation.Y, panel.ClientSize.Height - control.Height));
+
+                // Update control position
+                control.Location = newLocation;
+            }
+        };
+
+        // Restore control's original position if it was dragged outside the panel
+       prop.MouseUp += (sender, e) =>
+{
+    var control = sender as Control;
+    var panel = control.Parent as Panel;
+
+    if (panel != null)
+    {
+        var maxPosX = panel.ClientSize.Width - control.Width;
+        var maxPosY = panel.ClientSize.Height - control.Height;
+
+        if(control.Location.X < 0 || control.Location.Y < 0 ||
+           control.Location.X > maxPosX || control.Location.Y > maxPosY)
+        {
+            if (control.Tag is Point tagPoint)
+            {
+                control.Location = tagPoint;
+            }
+            else if (control.Tag is string tagString)
+            {
+                string[] parts = tagString.Split(',');
+                if (parts.Length == 2 && int.TryParse(parts[0], out int x) && int.TryParse(parts[1], out int y))
                 {
-                    if((string)prop.Tag == "front-background")
-                    {
-                        panelFront.BackgroundImage = prop.BackgroundImage; 
-                        panelFront.BackgroundImageLayout = ImageLayout.Stretch;
-                    }
-                    else
-                    {
-                        panelBack.BackgroundImage = prop.BackgroundImage;
-                        panelBack.BackgroundImageLayout = ImageLayout.Stretch;
-                    }
-                    
-
-
-                } else
-                {
-                    ControlMoverOrResizer.Init(prop);
-                    
-                    if ((string)prop.Tag == "front")
-                        panelFront.Controls.Add(prop);
-                    else
-                        panelBack.Controls.Add(prop);
-
-
+                    control.Location = new Point(x, y);
                 }
+            }
+          }
+ else
+            {
+                // Save new control position in Tag property
+                control.Tag = control.Location;
+            }
+        }
+    };
 
+    }
+    });
 
-                //panelFront.Controls.Add(prop);
-            });
         }
 
         private void btnSaveTempalte_Click(object sender, EventArgs e)

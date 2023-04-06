@@ -150,7 +150,7 @@ namespace MISGroup_4
 
         private void label19_Click_1(object sender, EventArgs e)
         {
-
+                  
         }
 
         private void label22_Click(object sender, EventArgs e)

@@ -213,10 +213,18 @@ namespace MISGroup_4
                 {
                     int x = (e.X - _cursorStartPoint.X) + control.Left;
                     int y = (e.Y - _cursorStartPoint.Y) + control.Top;
+
+                    // Restrict the movement within the bounds of the panel
+                    int panelWidth = 229;
+                    int panelHeight = 332;
+                    x = Math.Min(Math.Max(x, 0), panelWidth - control.Width);
+                    y = Math.Min(Math.Max(y, 0), panelHeight - control.Height);
+
                     control.Location = new Point(x, y);
                 }
             }
         }
+
 
         private static void StopDragOrResizing(Control control)
         {

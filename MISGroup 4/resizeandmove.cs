@@ -152,60 +152,99 @@ namespace MISGroup_4
             }
             if (_resizing)
             {
-                if (MouseIsInLeftEdge)
-                {
-                    if (MouseIsInTopEdge)
-                    {
-                        control.Width -= (e.X - _cursorStartPoint.X);
-                        control.Left += (e.X - _cursorStartPoint.X);
-                        control.Height -= (e.Y - _cursorStartPoint.Y);
-                        control.Top += (e.Y - _cursorStartPoint.Y);
-                    }
-                    else if (MouseIsInBottomEdge)
-                    {
-                        control.Width -= (e.X - _cursorStartPoint.X);
-                        control.Left += (e.X - _cursorStartPoint.X);
-                        control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
-                    }
-                    else
-                    {
-                        control.Width -= (e.X - _cursorStartPoint.X);
-                        control.Left += (e.X - _cursorStartPoint.X);
-                    }
-                }
-                else if (MouseIsInRightEdge)
-                {
-                    if (MouseIsInTopEdge)
-                    {
-                        control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
-                        control.Height -= (e.Y - _cursorStartPoint.Y);
-                        control.Top += (e.Y - _cursorStartPoint.Y);
+              
 
-                    }
-                    else if (MouseIsInBottomEdge)
-                    {
-                        control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
-                        control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
-                    }
-                    else
-                    {
-                        control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
-                    }
-                }
-                else if (MouseIsInTopEdge)
+                Rectangle newBounds = control.Bounds;
+
+                // Check if the control's new position or size would extend beyond the bounds of its container
+                if (newBounds.Left < 0 || newBounds.Top < 0 || newBounds.Right > control.Parent.ClientSize.Width || newBounds.Bottom > control.Parent.ClientSize.Height)
                 {
-                    control.Height -= (e.Y - _cursorStartPoint.Y);
-                    control.Top += (e.Y - _cursorStartPoint.Y);
+                    // If the control's new bounds would extend beyond the container, try to move the control back into the container
+                    int newLeft = Math.Max(0, Math.Min(control.Left, control.Parent.ClientSize.Width - control.Width));
+                    int newTop = Math.Max(0, Math.Min(control.Top, control.Parent.ClientSize.Height - control.Height));
+                    control.Location = new Point(newLeft, newTop);
+
+                    // Check if the control's size needs to be adjusted to fit within the container
+                    newBounds = control.Bounds;
+                    if (newBounds.Left < 0 || newBounds.Top < 0 || newBounds.Right > control.Parent.ClientSize.Width || newBounds.Bottom > control.Parent.ClientSize.Height)
+                    {
+                        // Determine the maximum width and height that the control can have while still fitting within the container
+                        int maxWidth = control.Parent.ClientSize.Width - control.Left;
+                        int maxHeight = control.Parent.ClientSize.Height - control.Top;
+                        int newWidth = Math.Min(control.Width, maxWidth);
+                        int newHeight = Math.Min(control.Height, maxHeight);
+
+                        // If the control's size needs to be adjusted, resize the control and move it to the nearest valid position within the container
+                        if (newWidth < control.Width || newHeight < control.Height)
+                        {
+                            control.Size = new Size(newWidth, newHeight);
+                            newBounds = control.Bounds;
+
+                            int newLeft2 = Math.Max(0, Math.Min(control.Left, control.Parent.ClientSize.Width - control.Width));
+                            int newTop2 = Math.Max(0, Math.Min(control.Top, control.Parent.ClientSize.Height - control.Height));
+                            control.Location = new Point(newLeft2, newTop2);
+                        }
+                    }
                 }
-                else if (MouseIsInBottomEdge)
-                {
-                    control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
-                }
+
+
                 else
                 {
-                    StopDragOrResizing(control);
+                    if (MouseIsInLeftEdge)
+                    {
+                        if (MouseIsInTopEdge)
+                        {
+                            control.Width -= (e.X - _cursorStartPoint.X);
+                            control.Left += (e.X - _cursorStartPoint.X);
+                            control.Height -= (e.Y - _cursorStartPoint.Y);
+                            control.Top += (e.Y - _cursorStartPoint.Y);
+                        }
+                        else if (MouseIsInBottomEdge)
+                        {
+                            control.Width -= (e.X - _cursorStartPoint.X);
+                            control.Left += (e.X - _cursorStartPoint.X);
+                            control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
+                        }
+                        else
+                        {
+                            control.Width -= (e.X - _cursorStartPoint.X);
+                            control.Left += (e.X - _cursorStartPoint.X);
+                        }
+                    }
+                    else if (MouseIsInRightEdge)
+                    {
+                        if (MouseIsInTopEdge)
+                        {
+                            control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
+                            control.Height -= (e.Y - _cursorStartPoint.Y);
+                            control.Top += (e.Y - _cursorStartPoint.Y);
+                        }
+                        else if (MouseIsInBottomEdge)
+                        {
+                            control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
+                            control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
+                        }
+                        else
+                        {
+                            control.Width = (e.X - _cursorStartPoint.X) + _currentControlStartSize.Width;
+                        }
+                    }
+                    else if (MouseIsInTopEdge)
+                    {
+                        control.Height -= (e.Y - _cursorStartPoint.Y);
+                        control.Top += (e.Y - _cursorStartPoint.Y);
+                    }
+                    else if (MouseIsInBottomEdge)
+                    {
+                        control.Height = (e.Y - _cursorStartPoint.Y) + _currentControlStartSize.Height;
+                    }
+                    else
+                    {
+                        StopDragOrResizing(control);
+                    }
                 }
             }
+
             else if (_moving)
             {
                 _moveIsInterNal = !_moveIsInterNal;
@@ -215,7 +254,7 @@ namespace MISGroup_4
                     int y = (e.Y - _cursorStartPoint.Y) + control.Top;
 
                     // Restrict the movement within the bounds of the panel
-                    int panelWidth = 229;
+                    int panelWidth = 228;
                     int panelHeight = 332;
                     x = Math.Min(Math.Max(x, 0), panelWidth - control.Width);
                     y = Math.Min(Math.Max(y, 0), panelHeight - control.Height);

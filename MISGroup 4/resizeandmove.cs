@@ -25,6 +25,7 @@ namespace MISGroup_4
             Move,
             Resize,
             MoveAndResize,
+         
 
         }
         internal enum stop
@@ -61,8 +62,16 @@ namespace MISGroup_4
             control.MouseMove += (sender, e) => MoveControl(container, e);
             stopdragandresize = stop.StopDragOrResizing;
             WorkType = MoveOrResize.MoveAndResize;
-           
 
+
+
+        }
+
+        public static void RemoveEventHandler(Control control)
+        {
+            control.MouseDown -= (sender, e) => StartMovingOrResizing(control, e);
+            control.MouseUp -= (sender, e) => StopDragOrResizing(control);
+            control.MouseMove -= (sender, e) => MoveControl(control, e);
         }
 
         private static void UpdateMouseEdgeProperties(Control control, Point mouseLocationInControl)
@@ -265,12 +274,24 @@ namespace MISGroup_4
         }
 
 
-        private static void StopDragOrResizing(Control control)
+        public static void StopDragOrResizing(Control control)
         {
             _resizing = false;
             _moving = false;
             control.Capture = false;
             UpdateMouseCursor(control);
+        }
+
+      
+        public void MyControl_MouseUp(object sender, MouseEventArgs e)
+
+        {
+            Control control = sender as Control;
+
+            if (_resizing || _moving)
+            {
+                StopDragOrResizing(control);
+            }
         }
 
     }

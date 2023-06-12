@@ -168,6 +168,7 @@ namespace MISGroup_4
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+
             if (e.RowIndex < 0)
                 return;
             switch (dataGridView1.Columns[e.ColumnIndex].Name)
@@ -384,8 +385,9 @@ namespace MISGroup_4
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
-        }
+            
+            
+        }   
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
@@ -394,7 +396,8 @@ namespace MISGroup_4
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            
+            Guide form = new Guide();
+            form.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -492,7 +495,11 @@ namespace MISGroup_4
                 e.Handled = true;
             }
         }
-                  
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
    

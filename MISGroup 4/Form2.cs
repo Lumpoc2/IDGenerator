@@ -50,7 +50,8 @@ namespace MISGroup_4
                         using (MySqlDataReader rd = cmd.ExecuteReader())
                         {
                             Rfid.Enabled = false;
-                            textBox7.Enabled = false;
+                            textBox7.Enabled = false;   
+
                             //string course = textBox9.Text;
                             //string student_id = textBox7.Text;
                             //string first_name = textBox1.Text;
@@ -64,7 +65,7 @@ namespace MISGroup_4
                             {
                                 Rfid.Text = rd.GetString("rfid");
                                 textBox7.Text = rd.GetString("student_id");
-                                textBox9.Text = rd.GetString("program");
+                                CourseCombo.Text = rd.GetString("program");
                                 textBox1.Text = rd.GetString("first_name");
                                 textBox3.Text = rd.GetString("last_name");
                                 textBox2.Text = rd.GetString("middle_name");
@@ -88,10 +89,17 @@ namespace MISGroup_4
 
         void Start_cam()
         {
-            Devices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            frame = new VideoCaptureDevice(Devices[0].MonikerString);
-            frame.NewFrame += new AForge.Video.NewFrameEventHandler(NewFrame_event);
-            frame.Start();
+            try
+            {
+                FilterInfoCollection Devices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                frame = new VideoCaptureDevice(Devices[0].MonikerString);
+                frame.NewFrame += new AForge.Video.NewFrameEventHandler(NewFrame_event);
+                frame.Start();
+            }
+        catch (Exception ex)
+            {
+                MessageBox.Show("An Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
       
         void NewFrame_event(object send, NewFrameEventArgs eventArgs)
@@ -100,6 +108,7 @@ namespace MISGroup_4
             pictureBox1.Image = (Image)eventArgs.Frame.Clone();
 
         }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -113,17 +122,17 @@ namespace MISGroup_4
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "PNG files(*.png)|*.png| All files(*.*)|*.*";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) ;
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     imagelocation = dialog.FileName;
                     pictureBox2.ImageLocation = imagelocation;
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("An Error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -206,7 +215,7 @@ namespace MISGroup_4
             string con_string = "server=localhost;Database=mis;port=3306;username=root;password=mark_123";
             MySqlConnection conn = new MySqlConnection(con_string);
 
-            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox9.Text) ||
+            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(CourseCombo.Text) ||
                string.IsNullOrEmpty(textBox7.Text) || string.IsNullOrEmpty(textBox3.Text) ||
                string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox8.Text) ||
                string.IsNullOrEmpty(textBox5.Text) ||
@@ -221,7 +230,7 @@ namespace MISGroup_4
                 {
                     conn.Open();
                     string rfid = Rfid.Text;
-                    string course = textBox9.Text;
+                    string course = CourseCombo.Text;
                     string student_id = textBox7.Text;
                     string first_name = textBox1.Text;
                     string last_name = textBox3.Text;
@@ -234,7 +243,7 @@ namespace MISGroup_4
 
                     if(isEdit)
                     {
-                        query = "update students set program = @program, first_name = @first_name, last_name = @last_name, middle_name = @middle_name, ext_name = @ext_name, guardian_name= @guardian_name, contact = @contact, address = @address, profile_picture = @profile_picture, Signature = @Signature  student_id = @student_id where rfid = @rfid";
+                        query = "update students set student_id = @student_id, program = @program, first_name = @first_name, last_name = @last_name, middle_name = @middle_name, ext_name = @ext_name, guardian_name= @guardian_name, contact = @contact, address = @address, profile_picture = @profile_picture, Signature = @Signature   where rfid = @rfid";
                     } else
                     {
                          query = "insert into students(rfid,student_id,program,first_name,last_name,middle_name,ext_name,guardian_name,contact,address,profile_picture,Signature) VALUES (@rfid,@student_id,@program,@first_name,@last_name,@middle_name,@ext_name,@guardian_name,@contact,@address, @profile_picture,@Signature) ";
@@ -360,6 +369,18 @@ namespace MISGroup_4
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '-'))
             {
                 e.Handled = true;
+            }
+        }
+
+      
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (frame != null && frame.IsRunning)
+            {
+                frame.SignalToStop();
+                frame.WaitForStop();
+                frame = null;
             }
         }
     }

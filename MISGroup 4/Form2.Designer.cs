@@ -54,10 +54,10 @@ namespace MISGroup_4
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.Rfid = new System.Windows.Forms.TextBox();
+            this.CourseCombo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -319,14 +319,6 @@ namespace MISGroup_4
             this.label10.Text = "Emergency contact";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(191, 108);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(157, 23);
-            this.textBox9.TabIndex = 0;
-            this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged_1);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -360,12 +352,26 @@ namespace MISGroup_4
             this.Rfid.TextChanged += new System.EventHandler(this.textBox10_TextChanged_1);
             this.Rfid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Rfid_KeyPress);
             // 
+            // CourseCombo
+            // 
+            this.CourseCombo.FormattingEnabled = true;
+            this.CourseCombo.Items.AddRange(new object[] {
+            "BSCS-I",
+            "BSCS-II",
+            "BSCS-III",
+            "BSCS-IIII"});
+            this.CourseCombo.Location = new System.Drawing.Point(191, 108);
+            this.CourseCombo.Name = "CourseCombo";
+            this.CourseCombo.Size = new System.Drawing.Size(157, 23);
+            this.CourseCombo.TabIndex = 13;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Maroon;
+            this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(941, 405);
+            this.Controls.Add(this.CourseCombo);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.Rfid);
             this.Controls.Add(this.label10);
@@ -386,7 +392,6 @@ namespace MISGroup_4
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.textBox6);
@@ -397,6 +402,7 @@ namespace MISGroup_4
             this.Controls.Add(this.textBox1);
             this.Name = "Form2";
             this.Text = "Upload";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -433,9 +439,9 @@ namespace MISGroup_4
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox Rfid;
+        private System.Windows.Forms.ComboBox CourseCombo;
     }
 }

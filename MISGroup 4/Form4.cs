@@ -22,8 +22,10 @@ namespace MISGroup_4
         private bool IsView = false;
         private Student student;
         public Form1 form1;
-       
-       
+        private bool enableDragResize = false;
+        public string _studentId { get; set; }
+
+
         public Form4(Form1 _form1)
         {
             form1 = _form1;
@@ -34,13 +36,14 @@ namespace MISGroup_4
         {
             InitializeComponent();
             IsView = true;
+            _studentId = studentId;
             GetStudent(studentId);
             
         }
 
         
 
-        private void GetStudent(string studentId)
+        public void GetStudent(string studentId)
         {
             try
             {
@@ -176,7 +179,7 @@ namespace MISGroup_4
             {
                 this.panel1.Controls.OfType<Control>().ToList().ForEach(prop =>
                 {
-                    if(prop.GetType() != typeof(Button))
+                    if (prop.GetType() != typeof(Button))
                     {
                         temp.Add(prop);
                         if(prop.GetType() == typeof(Panel))
@@ -208,12 +211,14 @@ namespace MISGroup_4
             panelFront.Controls.Clear();
             panelBack.Controls.Clear();
 
+            // Set this flag variable to true in Form1 to enable draggable and resizable controls
+
             properties.ForEach(prop =>
             {
-                //Check Control if panel
-                if (prop.GetType() == typeof(Panel))
+                // Check if control is a panel
+                if (prop is Panel)
                 {
-                    if ((string)prop.Tag == "front-background")
+                    if (prop.Tag as string == "front-background")
                     {
                         panelFront.BackgroundImage = prop.BackgroundImage;
                         panelFront.BackgroundImageLayout = ImageLayout.Stretch;
@@ -222,24 +227,23 @@ namespace MISGroup_4
                     {
                         panelBack.BackgroundImage = prop.BackgroundImage;
                         panelBack.BackgroundImageLayout = ImageLayout.Stretch;
-
                     }
-
                 }
                 else
                 {
-                   
+
                     if ((string)prop.Tag == "front")
                         panelFront.Controls.Add(prop);
                     else
                         panelBack.Controls.Add(prop);
-
-
+                   
                 }
-               
-
-                //panel1.Controls.Add(prop);
             });
+
+            // Initialize ControlMoverOrResizer for all controls
+           
+
+
         }
 
         private void Form4_FormClosed(object sender, FormClosedEventArgs e)
@@ -264,15 +268,24 @@ namespace MISGroup_4
         }
         public void pntdoc_printpage (object sender,PrintPageEventArgs e)
         {
+            
+           
             Rectangle pagearea = e.PageBounds;
             e.Graphics.DrawImage(memorying,(pagearea.Width/2)-(this.panel1.Width/2),this.panel1.Location.Y);
+
+
+
         }
         Bitmap memorying;
         public void getprintarea(Panel pnl)
         {
+          
+
+          
+
             memorying = new Bitmap(pnl.Width,pnl.Height);
             pnl.DrawToBitmap(memorying, new Rectangle(0, 0, pnl.Width, pnl.Height));
-
+          
 
         }
 

@@ -115,9 +115,12 @@ namespace MISGroup_4.Modules
                         Text = GetPropertyValue(rd.GetString("name"), student),
                         Size = new Size(int.Parse(size[0]), int.Parse(size[1])),
                         Location = new Point(int.Parse(location[0]), int.Parse(location[1])),
-                        //Font =  new Font("Arial", FontStyle,)
-                        Font = new Font(FontFamily.GenericSansSerif, 10,FontStyle.Bold),
-                    };
+                        Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold),
+                       
+                     
+                    }; 
+                    break;
+
 
                     break;
                 case "PictureBox":

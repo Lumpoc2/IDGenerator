@@ -69,10 +69,10 @@ namespace MISGroup_4
             this.panelFront.Controls.Add(this.Program);
             this.panelFront.Controls.Add(this.Fullname);
             this.panelFront.Controls.Add(this.StudentId);
-            this.panelFront.Location = new System.Drawing.Point(23, 38);
+            this.panelFront.Location = new System.Drawing.Point(33, 38);
             this.panelFront.Margin = new System.Windows.Forms.Padding(4);
             this.panelFront.Name = "panelFront";
-            this.panelFront.Size = new System.Drawing.Size(234, 332);
+            this.panelFront.Size = new System.Drawing.Size(207, 324);
             this.panelFront.TabIndex = 10;
             this.panelFront.Tag = "front-background";
             this.panelFront.Click += new System.EventHandler(this.pictureBox5_Click);
@@ -81,7 +81,7 @@ namespace MISGroup_4
             // 
             this.ProfilePicture.AccessibleRole = System.Windows.Forms.AccessibleRole.OutlineButton;
             this.ProfilePicture.BackColor = System.Drawing.Color.Silver;
-            this.ProfilePicture.Location = new System.Drawing.Point(54, 102);
+            this.ProfilePicture.Location = new System.Drawing.Point(42, 102);
             this.ProfilePicture.Margin = new System.Windows.Forms.Padding(4);
             this.ProfilePicture.Name = "ProfilePicture";
             this.ProfilePicture.Size = new System.Drawing.Size(120, 119);
@@ -109,7 +109,7 @@ namespace MISGroup_4
             this.Fullname.BackColor = System.Drawing.Color.Transparent;
             this.Fullname.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Fullname.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Fullname.Location = new System.Drawing.Point(63, 264);
+            this.Fullname.Location = new System.Drawing.Point(63, 258);
             this.Fullname.Name = "Fullname";
             this.Fullname.Size = new System.Drawing.Size(99, 25);
             this.Fullname.TabIndex = 13;
@@ -132,9 +132,9 @@ namespace MISGroup_4
             // Signature
             // 
             this.Signature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Signature.Location = new System.Drawing.Point(43, 254);
+            this.Signature.Location = new System.Drawing.Point(32, 247);
             this.Signature.Name = "Signature";
-            this.Signature.Size = new System.Drawing.Size(141, 44);
+            this.Signature.Size = new System.Drawing.Size(144, 48);
             this.Signature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Signature.TabIndex = 15;
             this.Signature.TabStop = false;
@@ -145,7 +145,7 @@ namespace MISGroup_4
             // 
             this.GuardianName.AutoSize = true;
             this.GuardianName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.GuardianName.Location = new System.Drawing.Point(68, 101);
+            this.GuardianName.Location = new System.Drawing.Point(56, 101);
             this.GuardianName.Name = "GuardianName";
             this.GuardianName.Size = new System.Drawing.Size(116, 20);
             this.GuardianName.TabIndex = 16;
@@ -157,7 +157,7 @@ namespace MISGroup_4
             // 
             this.Contact.AutoSize = true;
             this.Contact.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Contact.Location = new System.Drawing.Point(84, 141);
+            this.Contact.Location = new System.Drawing.Point(71, 136);
             this.Contact.Name = "Contact";
             this.Contact.Size = new System.Drawing.Size(71, 15);
             this.Contact.TabIndex = 16;
@@ -180,7 +180,7 @@ namespace MISGroup_4
             this.panelBack.Location = new System.Drawing.Point(299, 38);
             this.panelBack.Margin = new System.Windows.Forms.Padding(4);
             this.panelBack.Name = "panelBack";
-            this.panelBack.Size = new System.Drawing.Size(234, 332);
+            this.panelBack.Size = new System.Drawing.Size(205, 324);
             this.panelBack.TabIndex = 11;
             this.panelBack.Tag = "back-background";
             this.panelBack.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
@@ -189,7 +189,7 @@ namespace MISGroup_4
             // 
             this.Address.AutoSize = true;
             this.Address.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Address.Location = new System.Drawing.Point(43, 121);
+            this.Address.Location = new System.Drawing.Point(15, 121);
             this.Address.Name = "Address";
             this.Address.Size = new System.Drawing.Size(169, 15);
             this.Address.TabIndex = 16;

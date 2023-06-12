@@ -59,13 +59,13 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 23);
             this.button2.TabIndex = 12;
-            this.button2.Text = "Background ";
+            this.button2.Text = "Back";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Maroon;
+            this.panel3.BackColor = System.Drawing.Color.DarkGreen;
             this.panel3.Controls.Add(this.btnSaveTempalte);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.button2);
@@ -89,11 +89,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(19, 27);
+            this.label1.Location = new System.Drawing.Point(8, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 15);
+            this.label1.Size = new System.Drawing.Size(85, 15);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Properties";
+            this.label1.Text = "ID Background";
             // 
             // panelFront
             // 
@@ -101,7 +101,7 @@
             this.panelFront.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelFront.Location = new System.Drawing.Point(23, 38);
             this.panelFront.Name = "panelFront";
-            this.panelFront.Size = new System.Drawing.Size(234, 332);
+            this.panelFront.Size = new System.Drawing.Size(207, 324);
             this.panelFront.TabIndex = 4;
             this.panelFront.Tag = "front-background";
             this.panelFront.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFront_Paint);
@@ -112,7 +112,7 @@
             this.panelBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelBack.Location = new System.Drawing.Point(299, 38);
             this.panelBack.Name = "panelBack";
-            this.panelBack.Size = new System.Drawing.Size(228, 332);
+            this.panelBack.Size = new System.Drawing.Size(207, 324);
             this.panelBack.TabIndex = 5;
             this.panelBack.Tag = "back-background";
             this.panelBack.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
@@ -123,7 +123,7 @@
             this.panel2.Controls.Add(this.panelBack);
             this.panel2.Location = new System.Drawing.Point(161, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(549, 396);
+            this.panel2.Size = new System.Drawing.Size(526, 396);
             this.panel2.TabIndex = 0;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
@@ -131,7 +131,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 445);
+            this.ClientSize = new System.Drawing.Size(709, 445);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Name = "Form1";

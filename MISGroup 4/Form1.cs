@@ -15,11 +15,14 @@ namespace MISGroup_4
 {
     public partial class Form1 : Form
     {
+
+     
         public Form4 form4;
         public Form1(Form4 _form4)
         {
             form4= _form4;
             InitializeComponent();
+           
         }
 
 
@@ -37,18 +40,18 @@ namespace MISGroup_4
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png| All files(*.*)|*.*";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK);
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     imagelocation = dialog.FileName;
                     panelFront.BackgroundImage = ImageLoader.ResizeImage(imagelocation, panelFront.Size);
                     panelFront.BackgroundImageLayout = ImageLayout.Stretch;
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("An Error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
 
@@ -66,35 +69,40 @@ namespace MISGroup_4
 
         public void GetIdTemplate(List<Control> properties)
         {
-           properties.ForEach(prop =>
-{
-    // Check if control is a panel
-    if (prop is Panel)
-    {
-        if (prop.Tag as string == "front-background")
-        {
-            panelFront.BackgroundImage = prop.BackgroundImage;
-            panelFront.BackgroundImageLayout = ImageLayout.Stretch;
-        }
-        else
-        {
-            panelBack.BackgroundImage = prop.BackgroundImage;
-            panelBack.BackgroundImageLayout = ImageLayout.Stretch;
-        }
-    }
-    else
-    {
-        ControlMoverOrResizer.Init(prop);
-
-        if ((string)prop.Tag == "front")
-            panelFront.Controls.Add(prop);
-        else
-            panelBack.Controls.Add(prop);
+            // Set this flag variable to true in Form1 to enable draggable and resizable controls
 
 
-    }
 
-});
+            foreach (Control prop in properties)
+            {
+                if (prop is Panel)
+                {
+                    if (prop.Tag as string == "front-background")
+                    {
+                        panelFront.BackgroundImage = prop.BackgroundImage;
+                        panelFront.BackgroundImageLayout = ImageLayout.Stretch;
+                    }
+                    else
+                    {
+                        panelBack.BackgroundImage = prop.BackgroundImage;
+                        panelBack.BackgroundImageLayout = ImageLayout.Stretch;
+                    }
+                }
+                else
+                {
+                    prop.Enabled = true;
+                   ControlMoverOrResizer.Init(prop);
+                    {
+                        if ((string)prop.Tag == "front")
+                            panelFront.Controls.Add(prop);
+                        else
+                            panelBack.Controls.Add(prop);
+
+                    }
+                }
+            }
+
+
 
         }
 
@@ -103,14 +111,12 @@ namespace MISGroup_4
             var properties = new List<Control>();
             panelFront.Controls.OfType<Control>().ToList().ForEach(control =>
             {
-
                 properties.Add(control);
                     
                 //controls.Append($"{control.GetType().ToString()} \n")
             });
             panelBack.Controls.OfType<Control>().ToList().ForEach(control =>
             {
-
                 properties.Add(control);
                 
 
@@ -143,26 +149,35 @@ namespace MISGroup_4
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var temp = new List<Control>();
+            //var temp = new List<Control>();
 
-          
-            this.panel2.Controls.OfType<Control>().ToList().ForEach(prop =>
-            {
-                if (prop.GetType() != typeof(Button))
-                {
-                    temp.Add(prop);
-                    if (prop.GetType() == typeof(Panel))
-                    {
-                        prop.Controls.OfType<Control>().ToList().ForEach(p =>
-                        {
-                            temp.Add(p);
 
-                        });
-                    }
-                }
-            });
+            //this.panel2.Controls.OfType<Control>().ToList().ForEach(prop =>
+            //{
+            //    if (prop.GetType() != typeof(Button))
+            //    {
+            //        temp.Add(prop);
 
-            form4.GetIdTemp(temp);
+            //        if (prop.GetType() == typeof(Panel))
+            //        {
+            //            prop.Controls.OfType<Control>().ToList().ForEach(p =>
+            //            {
+            //                ControlMoverOrResizer.RemoveEventHandler(p);
+            //                temp.Add(p);
+
+            //            });
+            //        }
+
+
+            //    }
+
+            //});
+
+            //form4.GetIdTemp(temp);
+
+            form4.GetStudent(form4._studentId);
+           
+
         }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e)
@@ -177,18 +192,19 @@ namespace MISGroup_4
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png| All files(*.*)|*.*";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) ;
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     imagelocation = dialog.FileName;
                     panelBack.BackgroundImage = ImageLoader.ResizeImage(imagelocation, panelBack.Size);
                     panelBack.BackgroundImageLayout = ImageLayout.Stretch;
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("An Error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
     }
 }
+  
